@@ -1,0 +1,11 @@
+version: 2
+
+seeds:
+  - name: productcategory
+    config:
+      database: adventureworks
+      schema: production
+      column_types:
+        productcategoryid: integer
+        name: varchar
+        modifieddate: timestamp

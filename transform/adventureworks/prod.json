@@ -1,0 +1,42 @@
+{
+  "name": "dim_address",
+  "resource_type": "model",
+  "package_name": "adventureworks",
+  "original_file_path": "models/marts/dim_address.sql",
+  "unique_id": "model.adventureworks.dim_address",
+  "alias": "dim_address",
+  "config": {
+    "enabled": true,
+    "alias": null,
+    "schema": "marts",
+    "database": null,
+    "tags": [],
+    "meta": {},
+    "group": null,
+    "materialized": "table",
+    "incremental_strategy": null,
+    "persist_docs": {},
+    "post-hook": [],
+    "pre-hook": [],
+    "quoting": {},
+    "column_types": {},
+    "full_refresh": null,
+    "unique_key": null,
+    "on_schema_change": "ignore",
+    "on_configuration_change": "apply",
+    "grants": {},
+    "packages": [],
+    "docs": { "show": true, "node_color": null },
+    "contract": { "enforced": false, "alias_types": true },
+    "access": "protected"
+  },
+  "tags": [],
+  "depends_on": {
+    "macros": ["macro.dbt_utils.generate_surrogate_key"],
+    "nodes": [
+      "seed.adventureworks.address",
+      "seed.adventureworks.stateprovince",
+      "seed.adventureworks.countryregion"
+    ]
+  }
+}

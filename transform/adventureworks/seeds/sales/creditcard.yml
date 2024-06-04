@@ -1,0 +1,15 @@
+version: 2
+
+seeds:
+  - name: creditcard
+    config:
+      database: adventureworks
+      schema: sales
+      column_types:
+        creditcardid: integer
+        cardtype: varchar
+        expyear: smallint
+        modifieddate: timestamptz
+        expmonth: smallint
+        cardnumber: varchar
+

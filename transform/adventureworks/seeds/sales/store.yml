@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: store
+    config:
+      database: adventureworks
+      schema: sales
+      column_types:
+        businessentityid: integer
+        storename: varchar
+        salespersonid: integer
+        modifieddate: timestamp

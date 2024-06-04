@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: workorder
+    config:
+      database: adventureworks
+      schema: production
+      column_types:
+        workorderid: integer
+        productid: integer
+        orderqty: integer
+        scrappedqty: integer
+        startdate: timestamp
+        enddate: timestamp
+        duedate: timestamp
+        scrapreasonid: integer
+        modifieddate: timestamp

@@ -1,0 +1,4 @@
+.vars/.env.sh
+*pyc*
+.venv
+*logs*

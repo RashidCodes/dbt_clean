@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: salesreason
+    config:
+      database: adventureworks
+      schema: sales
+      column_types:
+        salesreasonid: integer
+        name: varchar
+        reasontype: varchar
+        modifieddate: timestamp

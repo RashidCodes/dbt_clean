@@ -1,0 +1,39 @@
+adventureworks:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: '{{ env_var("SNOWFLAKE_ACCOUNT") }}'
+      user: '{{ env_var("SNOWFLAKE_USERNAME") }}'
+      password: '{{ env_var("SNOWFLAKE_PASSWORD") }}'
+      database: adventureworks_dev
+      role: '{{ env_var("SNOWFLAKE_ROLE") }}'
+      warehouse: compute_etl
+      schema: raw
+      threads: 32
+      client_session_keep_alive: False
+
+    preprod:
+      type: snowflake
+      account: '{{ env_var("SNOWFLAKE_ACCOUNT") }}'
+      user: '{{ env_var("SNOWFLAKE_USERNAME") }}'
+      password: '{{ env_var("SNOWFLAKE_PASSWORD") }}'
+      database: adventureworks_preprod
+      role: '{{ env_var("SNOWFLAKE_ROLE") }}'
+      warehouse: compute_etl
+      schema: raw
+      threads: 32
+      client_session_keep_alive: False
+
+    prod:
+      type: snowflake
+      account: '{{ env_var("SNOWFLAKE_ACCOUNT") }}'
+      user: '{{ env_var("SNOWFLAKE_USERNAME") }}'
+      password: '{{ env_var("SNOWFLAKE_PASSWORD") }}'
+      database: adventureworks
+      role: '{{ env_var("SNOWFLAKE_ROLE") }}'
+      warehouse: compute_etl
+      schema: raw
+      threads: 32
+      client_session_keep_alive: False
+

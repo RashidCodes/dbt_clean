@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: fact_workorder_monthly
+    columns:
+      - name: workorder_monthly_key
+        description: The surrogate key of the workorder_monthly
+        tests:
+          - not_null
+          - unique
+      - name: product_key
+        description: The surrogate key to the product
