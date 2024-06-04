@@ -1,10 +1,10 @@
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from snowflake.snowpark.session import Session
 from snowflake.snowpark import DataFrame
+from art import tprint
 import argparse
 import json
 import yaml
-import sys
 import os
 
 def drop_model_from_snowflake(session: Session, model_name: str, model_type: str) -> DataFrame:
@@ -119,6 +119,7 @@ def check_snowflake_creds(args: argparse.Namespace):
 
 
 if __name__ == "__main__":
+    tprint("dbt_clean.", font="bubblehead")
     parser = argparse.ArgumentParser(
                 prog='dbt_cleaner',
                 description='Remove unnecessary dbt models from snowflake after development'
