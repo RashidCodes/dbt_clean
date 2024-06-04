@@ -106,16 +106,13 @@ def check_snowflake_creds(args: argparse.Namespace):
     snowflake_password = os.getenv("SNOWFLAKE_PASSWORD")
     snowflake_account =  os.getenv("SNOWFLAKE_ACCOUNT")
     snowflake_role = os.getenv("SNOWFLAKE_ROLE")
-
     snowflake_vars = [
         snowflake_username,
         snowflake_password,
         snowflake_account,
         snowflake_role
     ]
-
     sf_creds_available = all(snowflake_vars)
-
     return (sf_creds_available, snowflake_vars)
 
 
