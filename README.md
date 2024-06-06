@@ -1,5 +1,5 @@
 # DBT Clean 
-Remove unncessary dbt models from snowflake after development.
+![dbt_clean.png](./assets/logo.png)
 
 ```python
 python dbt_cleaner.py --target prod --project adventureworks
