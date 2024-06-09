@@ -209,7 +209,7 @@ if __name__ == "__main__":
                 result = drop_model_from_snowflake(session=session, model_name=deleted_model, model_type=model_type_for_query)
                 print(result[0].status)
 
-            print("Successfully cleaned unused dbt models.")
+            print("Successfully removed unused dbt models.")
             exit(0)
         print("dbt_cleanup cancelled")
         exit(0)
