@@ -42,6 +42,9 @@ def get_dbt_models_in_sf(session: Session, dbt_roles: list, target_db: str) -> D
 
     :params target_db: str
         The name of the target database
+
+    :returns snowflake.snowpark.DataFrame
+        Sql run result in a dataframe
     """
     dbt_roles_str = ", ".join([f"'{role}'" for role in dbt_roles])
     get_dbt_models_in_sf_sql = (
