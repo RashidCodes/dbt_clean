@@ -1,6 +1,7 @@
 from dbt.cli.main import dbtRunner, dbtRunnerResult
 from snowflake.snowpark.session import Session
 from snowflake.snowpark import DataFrame
+from colorama import Fore, Style
 from art import tprint
 import argparse
 import json
@@ -28,7 +29,7 @@ def drop_model_from_snowflake(session: Session, model_name: str, model_type: str
     return session.sql(sql).collect()
 
 
-def get_dbt_models_in_sf(session: Session, dbt_role: str, target_db: str) -> DataFrame:
+def get_dbt_models_in_sf(session: Session, dbt_roles: list, target_db: str) -> DataFrame:
     """
     Check the information schema to find tables/views
     owned by dbt
@@ -36,17 +37,20 @@ def get_dbt_models_in_sf(session: Session, dbt_role: str, target_db: str) -> Dat
     :params session: Session
         A snowflake session
 
-    :params dbt_role: str
-        The name of the role assigned to dbt
+    :params dbt_roles: list
+        A list of dbt roles used to materialise dbt models
 
     :params target_db: str
         The name of the target database
     """
-    return session.sql(
+    dbt_roles_str = ", ".join([f"'{role}'" for role in dbt_roles])
+    get_dbt_models_in_sf_sql = (
         f"select lower(concat(table_catalog, '.', table_schema, '.', table_name)) as model_name, "
         "lower(table_type) as table_type "
         f"from {target_db}.information_schema.tables "
-        f"where lower(table_owner) = '{dbt_role}';").collect()
+        f"where lower(table_owner) in ({dbt_roles_str})")
+
+    return session.sql(get_dbt_models_in_sf_sql).collect()
 
 
 def get_dbt_models_and_materializations(dbt: dbtRunner, target_db: str) -> dict:
@@ -127,10 +131,18 @@ if __name__ == "__main__":
 
     parser.add_argument('-t', '--target', help="dbt target e.g. dev, prod", required=True)
     parser.add_argument('-p', '--project', help="dbt project name e.g. adventureworks", required=True)
+    parser.add_argument('-r', '--roles',
+                        nargs="+",
+                        help="The list of roles that dbt uses to materialise models. Default is [dbt_funcrole]",
+                        default=["dbt_funcrole"],
+                        action='extend')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0.0')
     args = parser.parse_args()
+
 
     TARGET = args.target
     PROJECT_NAME = args.project
+    dbt_roles = args.roles
 
     # initialize dbt runner
     dbt = dbtRunner()
@@ -164,13 +176,14 @@ if __name__ == "__main__":
 
     # get dbt models in snowflake
     # NB: dbt owns all objects created by dbt_funcrole role
-    dbt_models_in_sf_df = get_dbt_models_in_sf(session, dbt_role="dbt_funcrole", target_db=target_db)
+    dbt_models_in_sf_df = get_dbt_models_in_sf(session, dbt_roles=dbt_roles, target_db=target_db)
     # dbt models in snowflake (cleaned)
     dbt_models_in_sf: dict = {row.MODEL_NAME: row.TABLE_TYPE for row in dbt_models_in_sf_df}
 
     # models in your current dbt project
     model_configs: dict = get_dbt_models_and_materializations(dbt=dbt, target_db=target_db)
     models_tracked_by_dbt = {key for key, _ in model_configs.items()}
+    print(f"Running dbt clean with the following roles: {dbt_roles}")
 
     # find discrepancy
     model_names_in_sf = {model for model, _ in dbt_models_in_sf.items()}
@@ -178,8 +191,8 @@ if __name__ == "__main__":
     deleted_models = model_names_in_sf.difference(model_names_in_curr_dbt_proj)
 
     if len(deleted_models) > 0:
-        print(f"The following tables will be dropped: {deleted_models}")
-        drop_models = input("Enter yes to drop models: ")
+        print(f"{Fore.RED}The following tables will be dropped: {deleted_models}{Style.RESET_ALL}")
+        drop_models = input("Enter 'yes' to drop models: ")
 
         if drop_models.lower() == "yes":
             # remove deleted models
