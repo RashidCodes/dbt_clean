@@ -17,7 +17,7 @@ To remove unwanted materialised models from your snowflake account:
 1. Enter "yes" to remove unwanted models from snowflake
 
 # Demo
-1. Materialise your dbt models
+1. Materialise your dbt models.
     ```bash
     # navigate to the adventureworks project
     cd ./transform/adventureworks
@@ -25,7 +25,7 @@ To remove unwanted materialised models from your snowflake account:
     ```
 
 1. Rename the `report_sale` model in the *marts* directory to `report_sales`.
-1. Run the cleaner
+1. Run the cleaner.
     ```bash
     # dbt uses the listed roles to materialise the models
     python dbt_cleaner.py --target prod --project adventureworks --roles dbt_funcrole finance_dbt_funcrole
@@ -37,7 +37,7 @@ To remove unwanted materialised models from your snowflake account:
     Enter 'yes' to drop models:
     ```
 
-1. Type "yes" to remove the unwanted model from the target
+1. Type "yes" to remove the unwanted model from the target.
     ```bash
     Running dbt clean with the following roles: ['dbt_funcrole', 'finance_dbt_funcrole']
     The following tables will be dropped: {'adventureworks.marts.report_sale'}
@@ -46,5 +46,5 @@ To remove unwanted materialised models from your snowflake account:
     REPORT_SALE successfully dropped.
     Successfully removed unused dbt models.
     ```
-1. Proceed to push your changes for inspection
+1. Proceed to push your changes for inspection.
 
