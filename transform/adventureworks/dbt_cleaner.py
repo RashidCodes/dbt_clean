@@ -133,9 +133,10 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--project', help="dbt project name e.g. adventureworks", required=True)
     parser.add_argument('-r', '--roles',
                         nargs="+",
-                        help="The list of roles that dbt uses to materialise models. Default is [dbt_funcrole]",
-                        default=["dbt_funcrole"],
-                        action='extend')
+                        help="The list of roles that dbt uses to materialise models.",
+                        default=[],
+                        action='extend',
+                        required=True)
     parser.add_argument('--version', action='version', version='%(prog)s 1.0.0')
     args = parser.parse_args()
 
