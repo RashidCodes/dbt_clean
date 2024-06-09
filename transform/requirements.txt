@@ -1,5 +1,6 @@
 agate==1.9.1
 annotated-types==0.7.0
+art==6.2
 asn1crypto==1.5.1
 attrs==23.2.0
 Babel==2.15.0

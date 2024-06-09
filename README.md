@@ -6,7 +6,7 @@
 - DBT Project
 
 # Instructions
-To remove unwanted materialised models from your snowflake account:
+To remove unwanted materialised models from your snowflake target database:
 
 1. Copy and paste the `dbt_cleaner.py` script into your *dbt* project. You can find the script [here](./transform/adventureworks/dbt_cleaner.py)
 
@@ -14,7 +14,7 @@ To remove unwanted materialised models from your snowflake account:
     ```bash
     python dbt_cleaner.py --target prod --project adventureworks --roles dbt_funcrole finance_dbt_funcrole
     ```
-1. Enter "yes" to remove unwanted models from snowflake
+1. Enter "yes" to remove unwanted models from your snowflake target database
 
 # Demo
 1. Materialise your dbt models.
@@ -24,7 +24,7 @@ To remove unwanted materialised models from your snowflake account:
     dbt run --target prod
     ```
 
-1. Rename the `report_sale` model in the *marts* directory to `report_sales`.
+1. Rename the `report_sale.sql` model in the *marts* directory to `report_sales.sql`.
 1. Run the cleaner.
     ```bash
     # dbt uses the listed roles to materialise the models
